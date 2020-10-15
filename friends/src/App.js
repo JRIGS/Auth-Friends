@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Login from './components/Login';
+import PrivateRoute from './components/PrivateRoute';
+import FriendList from './components/FriendList';
+import AddFriend from './components/AddFriend';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+const linkstyle = {
+  textDecoration: 'none',
+  color: 'black'
+}
+class App extends Component {
+  render() {
+    return (
+      <Router>
+      <div className="App">
+      <nav>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <Link style={linkstyle} to='/login'>
+          Login
+          </Link>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        <p>
+          <Link style={linkstyle} to='/friends-list'>Friends</Link>
+        </p>
+        <p>
+          <Link style={linkstyle} to='/add-friend'>Add Friend</Link>
+        </p>
+      </nav>
+      <Route path='/login' component={Login} />
+      <PrivateRoute exact path='/friends-list' component={FriendList} />
+      <PrivateRoute exact path='/add-friend' component={AddFriend} />
+
+      </div>
+      </Router>
+    );
+  }
 }
 
 export default App;
